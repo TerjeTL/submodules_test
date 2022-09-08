@@ -33,6 +33,11 @@ endif()
 if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/freetype/CMakeLists.txt")
 	message(FATAL_ERROR "The freetype submodules was not downloaded! GIT_SUBMODULE was turned off or failed.")
 endif()
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/hdf5/CMakeLists.txt")
+	message(FATAL_ERROR "The hdf5 submodules was not downloaded! GIT_SUBMODULE was turned off or failed.")
+endif()
+
+find_package(HDF5)
 
 add_subdirectory("external/glfw")
 add_subdirectory("external/freetype")
