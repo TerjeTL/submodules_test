@@ -1,7 +1,7 @@
 ﻿# CMakeList.txt : CMake project for SubmodulesTest, include source and define
 # project specific logic here.
 #
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.15)
 
 # Add source to this project's executable.
 add_executable (${PROJECT_NAME} "SubmodulesTest.cpp")
@@ -12,4 +12,5 @@ endif()
 
 target_link_libraries(${PROJECT_NAME}
 	"glfw"
+	"freetype"
 )
