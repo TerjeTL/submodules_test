@@ -8,3 +8,6 @@
 	path = external/hdf5
 	url = https://github.com/HDFGroup/hdf5.git
 	branch = hdf5_1_12_2
+[submodule "external/jsoncpp"]
+	path = external/jsoncpp
+	url = https://github.com/open-source-parsers/jsoncpp.git

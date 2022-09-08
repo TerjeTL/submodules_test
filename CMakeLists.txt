@@ -36,18 +36,24 @@ endif()
 if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/hdf5/CMakeLists.txt")
 	message(FATAL_ERROR "The hdf5 submodules was not downloaded! GIT_SUBMODULE was turned off or failed.")
 endif()
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/jsoncpp/CMakeLists.txt")
+	message(FATAL_ERROR "The jsoncpp submodules was not downloaded! GIT_SUBMODULE was turned off or failed.")
+endif()
 
 find_package(HDF5)
 
 add_subdirectory("external/glfw")
 add_subdirectory("external/freetype")
+add_subdirectory("external/jsoncpp")
 
 target_include_directories(${PROJECT_NAME}
 	PUBLIC "external/glfw/include"
 	PUBLIC "external/freetype/include"
+	PUBLIC "external/jsoncpp/include"
 )
 
 target_link_directories(${PROJECT_NAME}
 	PRIVATE "external/glfw/src"
 	PRIVATE "external/freetype/src"
+	PRIVATE "external/jsoncpp/src"
 )
