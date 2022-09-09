@@ -53,6 +53,8 @@ add_subdirectory("external/freetype")
 add_subdirectory("external/jsoncpp")
 add_subdirectory("external/glew")
 
+find_package(OpenGL REQUIRED)
+
 set(ENV{PKG_CONFIG_PATH} "${CMAKE_SOURCE_DIR}/out/build/x64-debug/external/jsoncpp/pkg-config/")
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONCPP jsoncpp)
@@ -60,6 +62,16 @@ link_libraries(${JSONCPP_LIBRARIES})
 
 #get_target_property(JSON_INC_PATH jsoncpp_lib INTERFACE_INCLUDE_DIRECTORIES)
 #include_directories(${JSON_INC_PATH})
+
+# Define collections of includes that have to be made for morphologica
+set(MORPH_INC_CORE ${ARMADILLO_INCLUDE_DIR} ${ARMADILLO_INCLUDE_DIRS} ${HDF5_INCLUDE_DIR})
+set(MORPH_INC_GL ${OpenCV_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
+include_directories(${MORPH_INC_CORE} ${MORPH_INC_GL})
+
+# Assuming that you installed morphologica in-tree (i.e. 'next to' XXX.cpp).
+set(MORPH_INCLUDE_PATH "${PROJECT_SOURCE_DIR}/external/morphologica" CACHE PATH "The path to morphologica")
+include_directories(BEFORE ${MORPH_INCLUDE_PATH}/include)
+include_directories(BEFORE ${MORPH_INCLUDE_PATH})
 
 target_include_directories(${PROJECT_NAME}
 	PUBLIC "external/glfw/include"

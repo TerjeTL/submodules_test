@@ -10,10 +10,16 @@ if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET SubmodulesTest PROPERTY CXX_STANDARD 20)
 endif()
 
+# Morphologica code requires a number of libraries, collected into 'CORE' and 'GL'.
+set(MORPH_LIBS_CORE ${ARMADILLO_LIBRARY} ${ARMADILLO_LIBRARIES} ${HDF5_C_LIBRARIES} ${LAPACK_LIBRARIES})
+set(MORPH_LIBS_GL ${OpenCV_LIBS} OpenGL Freetype glfw)
+
 target_link_libraries(${PROJECT_NAME}
 	"glfw"
 	"freetype"
 	${JSONCPP_LIBRARIES}
 	libglew_static
+	${MORPH_LIBS_CORE}
+	${MORPH_LIBS_GL}
 	#"hdf5"
 )
