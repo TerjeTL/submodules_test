@@ -13,6 +13,6 @@ endif()
 target_link_libraries(${PROJECT_NAME}
 	"glfw"
 	"freetype"
-	"HDF5"
-	"jsoncpp"
+	${JSONCPP_LIBRARIES}
+	#"hdf5"
 )

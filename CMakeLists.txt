@@ -39,21 +39,35 @@ endif()
 if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/jsoncpp/CMakeLists.txt")
 	message(FATAL_ERROR "The jsoncpp submodules was not downloaded! GIT_SUBMODULE was turned off or failed.")
 endif()
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/opencv/CMakeLists.txt")
+	message(FATAL_ERROR "The opencv submodules was not downloaded! GIT_SUBMODULE was turned off or failed.")
+endif()
 
-find_package(HDF5)
+#find_package(HDF5)
+#find_package(openCV REQUIRED PATHS "${PROJECT_SOURCE_DIR}/external/opencv/cmake/")
+#find_package(OpenCV)
+
 
 add_subdirectory("external/glfw")
 add_subdirectory("external/freetype")
 add_subdirectory("external/jsoncpp")
 
+set(ENV{PKG_CONFIG_PATH} "${CMAKE_SOURCE_DIR}/out/build/x64-debug/external/jsoncpp/pkg-config/")
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(JSONCPP jsoncpp)
+link_libraries(${JSONCPP_LIBRARIES})
+
+#get_target_property(JSON_INC_PATH jsoncpp_lib INTERFACE_INCLUDE_DIRECTORIES)
+#include_directories(${JSON_INC_PATH})
+
 target_include_directories(${PROJECT_NAME}
 	PUBLIC "external/glfw/include"
 	PUBLIC "external/freetype/include"
-	PUBLIC "external/jsoncpp/include"
+	#PUBLIC "external/jsoncpp/include"
 )
 
 target_link_directories(${PROJECT_NAME}
 	PRIVATE "external/glfw/src"
 	PRIVATE "external/freetype/src"
-	PRIVATE "external/jsoncpp/src"
+	#PRIVATE "external/jsoncpp/src"
 )
