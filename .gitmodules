@@ -15,3 +15,6 @@
 	path = external/opencv
 	url = https://github.com/opencv/opencv.git
 	branch = 4.x
+[submodule "external/glew"]
+	path = external/glew
+	url = https://github.com/Perlmint/glew-cmake.git

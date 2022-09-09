@@ -51,6 +51,7 @@ endif()
 add_subdirectory("external/glfw")
 add_subdirectory("external/freetype")
 add_subdirectory("external/jsoncpp")
+add_subdirectory("external/glew")
 
 set(ENV{PKG_CONFIG_PATH} "${CMAKE_SOURCE_DIR}/out/build/x64-debug/external/jsoncpp/pkg-config/")
 find_package(PkgConfig REQUIRED)

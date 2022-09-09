@@ -14,5 +14,6 @@ target_link_libraries(${PROJECT_NAME}
 	"glfw"
 	"freetype"
 	${JSONCPP_LIBRARIES}
+	libglew_static
 	#"hdf5"
 )
