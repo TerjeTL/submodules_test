@@ -43,10 +43,18 @@ if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/opencv/CMakeLists.txt")
 	message(FATAL_ERROR "The opencv submodules was not downloaded! GIT_SUBMODULE was turned off or failed.")
 endif()
 
+
+if(WIN32)
+add_subdirectory(external/morphologica/buildtools)
+endif()
+
+
 #find_package(HDF5)
 #find_package(openCV REQUIRED PATHS "${PROJECT_SOURCE_DIR}/external/opencv/cmake/")
 #find_package(OpenCV)
 
+# Tell the program where the morph fonts are, to compile them into the binary
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMORPH_FONTS_DIR=\"\\\"${PROJECT_SOURCE_DIR}/external/morphologica/fonts\\\"\"")
 
 add_subdirectory("external/glfw")
 add_subdirectory("external/freetype")
@@ -68,10 +76,6 @@ set(MORPH_INC_CORE ${ARMADILLO_INCLUDE_DIR} ${ARMADILLO_INCLUDE_DIRS} ${HDF5_INC
 set(MORPH_INC_GL ${OpenCV_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
 include_directories(${MORPH_INC_CORE} ${MORPH_INC_GL})
 
-# Assuming that you installed morphologica in-tree (i.e. 'next to' XXX.cpp).
-set(MORPH_INCLUDE_PATH "${PROJECT_SOURCE_DIR}/external/morphologica" CACHE PATH "The path to morphologica")
-include_directories(BEFORE ${MORPH_INCLUDE_PATH}/include)
-include_directories(BEFORE ${MORPH_INCLUDE_PATH})
 
 target_include_directories(${PROJECT_NAME}
 	PUBLIC "external/glfw/include"
@@ -80,7 +84,7 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_directories(${PROJECT_NAME}
-	PRIVATE "external/glfw/src"
-	PRIVATE "external/freetype/src"
+	PUBLIC "external/glfw/src"
+	PUBLIC "external/freetype/src"
 	#PRIVATE "external/jsoncpp/src"
 )
