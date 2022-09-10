@@ -33,9 +33,6 @@ endif()
 if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/freetype/CMakeLists.txt")
 	message(FATAL_ERROR "The freetype submodules was not downloaded! GIT_SUBMODULE was turned off or failed.")
 endif()
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/hdf5/CMakeLists.txt")
-	message(FATAL_ERROR "The hdf5 submodules was not downloaded! GIT_SUBMODULE was turned off or failed.")
-endif()
 if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/jsoncpp/CMakeLists.txt")
 	message(FATAL_ERROR "The jsoncpp submodules was not downloaded! GIT_SUBMODULE was turned off or failed.")
 endif()
@@ -61,6 +58,8 @@ add_subdirectory("external/freetype")
 add_subdirectory("external/jsoncpp")
 add_subdirectory("external/glew")
 
+#find_package(Armadillo REQUIRED)
+find_package(HDF5 REQUIRED)
 find_package(OpenGL REQUIRED)
 
 set(ENV{PKG_CONFIG_PATH} "${CMAKE_SOURCE_DIR}/out/build/x64-debug/external/jsoncpp/pkg-config/")
@@ -76,15 +75,20 @@ set(MORPH_INC_CORE ${ARMADILLO_INCLUDE_DIR} ${ARMADILLO_INCLUDE_DIRS} ${HDF5_INC
 set(MORPH_INC_GL ${OpenCV_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${GLFW3_INCLUDE_DIR} ${FREETYPE_INCLUDE_DIRS})
 include_directories(${MORPH_INC_CORE} ${MORPH_INC_GL})
 
+set(HDF5DIR "C:/Program Files/HDF_Group/HDF5/1.12.2")
 
 target_include_directories(${PROJECT_NAME}
 	PUBLIC "external/glfw/include"
 	PUBLIC "external/freetype/include"
+	PUBLIC "${HDF5DIR}/include"
+	PUBLIC "D:/Development/C++/libraries/armadillo-11.2.4/include"
 	#PUBLIC "external/jsoncpp/include"
 )
 
 target_link_directories(${PROJECT_NAME}
 	PUBLIC "external/glfw/src"
 	PUBLIC "external/freetype/src"
+	PUBLIC "${HDF5DIR}/lib"
+	PUBLIC "D:/Development/C++/libraries/armadillo-11.2.4/src"
 	#PRIVATE "external/jsoncpp/src"
 )
